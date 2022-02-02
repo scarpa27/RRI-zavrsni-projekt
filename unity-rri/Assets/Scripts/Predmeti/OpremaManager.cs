@@ -39,17 +39,12 @@ public class OpremaManager : MonoBehaviour
         return currentEquipment[(int) slot];
     }
 
-    // Equip a new item
     public void Equip(Oprema newItem)
     {
         Oprema oldItem = null;
 
-        // Find out what slot the item fits in
-        // and put it there.
         var slotIndex = (int) newItem.equipSlot;
 
-        // If there was already an item in the slot
-        // make sure to put it back in the inventory
         if (currentEquipment[slotIndex] != null)
         {
             oldItem = currentEquipment[slotIndex];
@@ -57,7 +52,6 @@ public class OpremaManager : MonoBehaviour
             inventory.Add(oldItem);
         }
 
-        // An item has been equipped so we trigger the callback
         onEquipmentChanged?.Invoke(newItem, oldItem);
 
         currentEquipment[slotIndex] = newItem;
@@ -78,7 +72,6 @@ public class OpremaManager : MonoBehaviour
             if (currentMeshes[slotIndex] != null) Destroy(currentMeshes[slotIndex].gameObject);
 
 
-            // Equipment has been removed so we trigger the callback
             onEquipmentChanged?.Invoke(null, oldItem);
         }
     }
@@ -104,7 +97,7 @@ public class OpremaManager : MonoBehaviour
         currentMeshes[slotIndex] = newMesh;
     }
 
-    #region Singleton
+    #region Static
 
     public static OpremaManager instance
     {

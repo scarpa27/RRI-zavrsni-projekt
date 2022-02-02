@@ -1,10 +1,7 @@
-﻿using System.Collections;
-
-public class PlayerStats : LikStats
+﻿public class PlayerStats : LikStats
 {
-
     public GeneralStat bodovi;
-    
+
     public override void Start()
     {
         base.Start();
@@ -25,6 +22,4 @@ public class PlayerStats : LikStats
             damage.RemoveModifier(oldE.damageModifier);
         }
     }
-    
-    
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class NPCInteract : Interaktivno
 {
-    private bool _zadajemZadatke;
     public bool _rjesenZadatak;
     public bool _aktivanZadatak;
     private bool _prosloDovoljnoVremena;
+    private bool _zadajemZadatke;
 
     private int brZad;
 
@@ -16,23 +16,24 @@ public class NPCInteract : Interaktivno
         _zadajemZadatke = GetComponentInParent<ZadajZadatak>() != null;
         if (_zadajemZadatke) brZad = GetComponentInParent<ZadajZadatak>().brojZadatka;
     }
-    
+
     public override void Interact()
     {
         if (_zadajemZadatke)
         {
             if (!_aktivanZadatak && !_rjesenZadatak) Ponudi();
-            if (_aktivanZadatak  && !_rjesenZadatak) Provjeri();
+            if (_aktivanZadatak && !_rjesenZadatak) Provjeri();
             if (!_aktivanZadatak && _rjesenZadatak)
-                if (_prosloDovoljnoVremena) Odbij(); else GetComponentInParent<ZadajZadatak>().JeRjeseno();;
-            if (_aktivanZadatak  && _rjesenZadatak)  _aktivanZadatak = false;
+                if (_prosloDovoljnoVremena) Odbij();
+                else GetComponentInParent<ZadajZadatak>().JeRjeseno();
+            ;
+            if (_aktivanZadatak && _rjesenZadatak) _aktivanZadatak = false;
         }
     }
 
     private void Ponudi()
     {
         GetComponentInParent<ZadajZadatak>().PonudiZadatak();
-        
     }
 
     private void Provjeri()
@@ -42,6 +43,7 @@ public class NPCInteract : Interaktivno
             GetComponentInParent<ZadajZadatak>().NijeRjeseno();
             return;
         }
+
         _rjesenZadatak = true;
         _aktivanZadatak = false;
         GetComponentInParent<ZadajZadatak>().JeRjeseno();
@@ -62,5 +64,4 @@ public class NPCInteract : Interaktivno
             yield break;
         }
     }
-    
 }

@@ -29,10 +29,7 @@ public class LikStats : MonoBehaviour
         CurrentHealth -= damage;
 
         // If we hit 0. Die.
-        if (CurrentHealth <= 0)
-        {
-            OnHealthReachedZero?.Invoke();
-        }
+        if (CurrentHealth <= 0) OnHealthReachedZero?.Invoke();
     }
 
     public void Heal(float amount)

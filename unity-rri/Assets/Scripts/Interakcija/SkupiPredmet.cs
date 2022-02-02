@@ -8,7 +8,7 @@ public class SkupiPredmet : Interaktivno
 
     private void Start()
     {
-        // Ruksak.Instance.OnItemChangedCallback += Unisti;
+        Ruksak.Instance.OnItemChangedCallback += Unisti;
     }
 
     public override void Interact()
@@ -20,7 +20,6 @@ public class SkupiPredmet : Interaktivno
     private void PickUp()
     {
         Ruksak.Instance.Add(predmet);
-        // Destroy(gameObject);
         Unisti();
     }
 

@@ -15,10 +15,7 @@ public class Ruksak : MonoBehaviour
     {
         if (predmet.prikazi)
         {
-            if (items.Count >= space)
-            {
-                return;
-            }
+            if (items.Count >= space) return;
 
             items.Add(predmet);
             OnItemChangedCallback?.Invoke();
@@ -32,7 +29,7 @@ public class Ruksak : MonoBehaviour
         OnItemChangedCallback?.Invoke();
     }
 
-    #region Singleton
+    #region Static
 
     public static Ruksak Instance;
 

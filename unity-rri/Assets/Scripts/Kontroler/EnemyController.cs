@@ -2,24 +2,24 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 [RequireComponent(typeof(CharacterCombat))]
 public class EnemyController : MonoBehaviour
 {
     public float radiusVida = 10f;
     public float radiusKretanja = 20f;
+
     public float deltaVrijemeKretanja = 6f;
-    private NavMeshAgent _agent;
-    private Transform _target;
-    private Vector3 _pivot;
-    private CharacterCombat _mojCharacterCombat;
-    private Animator _animator;
     // private Player _igrac;
 
 
     public bool zanimaGaIgrac = true;
     public bool usePivot = true;
-    
+    private NavMeshAgent _agent;
+    private Animator _animator;
+    private CharacterCombat _mojCharacterCombat;
+    private Vector3 _pivot;
+    private Transform _target;
+
 
     private void Start()
     {
@@ -32,37 +32,41 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        
-        
-        float distance = Vector3.Distance(_target.position, transform.position);
-        
+        var distance = Vector3.Distance(_target.position, transform.position);
+
         if (distance > radiusVida) return;
-        
+
         _agent.SetDestination(_target.position);
         if (distance <= 3)
         {
             _mojCharacterCombat.Attack(Player.instance.playerStats);
-            Player.instance._animator.SetBool("BijeSe",true);
-            _animator.SetBool("BijeSe",true);
+            Player.instance._animator.SetBool("BijeSe", true);
+            _animator.SetBool("BijeSe", true);
         }
         else
         {
-            Player.instance._animator.SetBool("BijeSe",false);
-            _animator.SetBool("BijeSe",false);
+            Player.instance._animator.SetBool("BijeSe", false);
+            _animator.SetBool("BijeSe", false);
         }
-        
+
         FaceTarget();
     }
-    
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radiusVida);
+    }
+
     private IEnumerator Korutina(float delay)
     {
         StopCoroutine(OdgodiPocetak());
-        
+
         while (true)
         {
             _pivot = transform.parent.transform.position;
             NovaLokacija(radiusKretanja);
-            yield return new WaitForSeconds(delay+Random.Range(-1f,1f));
+            yield return new WaitForSeconds(delay + Random.Range(-1f, 1f));
         }
     }
 
@@ -81,7 +85,7 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
-    
+
     private void NovaLokacija(float r = 20)
     {
         while (true)
@@ -93,18 +97,15 @@ public class EnemyController : MonoBehaviour
             if (NavMesh.SamplePosition(cilj, out hit, 50, 7))
             {
                 _agent.SetDestination(hit.position);
-                _animator.SetBool("Hoda",true);
+                _animator.SetBool("Hoda", true);
             }
             else
+            {
                 continue;
+            }
+
             break;
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radiusVida);
     }
 
     // Point towards the player

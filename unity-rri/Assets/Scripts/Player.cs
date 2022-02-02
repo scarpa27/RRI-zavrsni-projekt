@@ -15,11 +15,11 @@ public class Player : MonoBehaviour
 
     public LayerMask movementMask;
     public LayerMask interactionMask;
+    public Animator _animator;
 
 
     private NavMeshAgent _navMeshAgent;
     private Transform _point;
-    public Animator _animator;
     public OnFocusChange FocusCallback;
 
 
@@ -107,7 +107,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    
 
     private void Gledaj()
     {
@@ -115,7 +114,7 @@ public class Player : MonoBehaviour
         var rot = Quaternion.LookRotation(new Vector3(smjer.x, 0, smjer.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 4f);
     }
-    
+
     private IEnumerator AnimatorStanja()
     {
         while (true)
@@ -131,7 +130,7 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    #region Singleton
+    #region Static
 
     public static Player instance;
 
